@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "postbuild": "echo > build/.nojekyll",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d build -r https://github.com/lutz143/baby-up.git",
     "develop": "concurrently \"node server.js\" \"npm start\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
