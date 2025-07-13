@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/baby-up/static/css/main.46b0a867.css",
+    "main.js": "/baby-up/static/js/main.e74b0425.js",
+    "static/js/453.fe4c74cc.chunk.js": "/baby-up/static/js/453.fe4c74cc.chunk.js",
+    "index.html": "/baby-up/index.html",
+    "main.46b0a867.css.map": "/baby-up/static/css/main.46b0a867.css.map",
+    "main.e74b0425.js.map": "/baby-up/static/js/main.e74b0425.js.map",
+    "453.fe4c74cc.chunk.js.map": "/baby-up/static/js/453.fe4c74cc.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.46b0a867.css",
+    "static/js/main.e74b0425.js"
+  ]
+}
