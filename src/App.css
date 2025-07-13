@@ -1,0 +1,38 @@
+/* Root styling */
+/* ===================================================================================================================================== */
+/* define variable colors */
+:root {
+    --black: rgba(28, 29, 33, 1);
+    --excellence-blue: rgba(0, 150, 255, 0.8);
+    --excellence-light-blue: rgba(5, 80, 134, 0.09);
+    --excellence-white: rgba(255, 255, 255, 0.9);
+    --excellence-black1: rgba(11, 14, 25, 1);
+    --excellence-black2: rgba(11, 15, 26, 1);
+    --excellence-black3: rgba(13, 16, 27, 1);
+    --excellence-black4: rgba(12, 15, 26, 1);
+    --excellence-black5: rgb(12, 15, 26, 0.95);
+
+    --blue-gray: rgba(68, 88, 119, 1);
+    --dark-gray: rgba(49, 52, 61, 1);
+    --dark-green: rgba(0, 104, 72);
+    --seafoam: rgb(15, 121, 125);
+    --seafoam-transparent: rgba(113, 202, 205, 0.5);
+    --light-seafoam: rgb(214, 241, 232);
+    --dark-red: rgba(192, 0, 0, 0.7);
+    --gray:rgba(200, 200, 201, 0.518);
+    --light-blue:rgba(12, 120, 194, 0.85);
+    --light-gray:rgba(238, 238, 247, 0.85);
+    --dark-blue: rgba(0, 48, 108);
+    --dark-blue-transparent: rgba(40, 67, 100, 1);
+    --light-blue-transparent: rgba(108, 152, 181, 0.5);
+    --white: rgb(255, 255, 255);
+    --white-transparent: rgba(255, 255, 255, 0.7);
+    --yellow: rgba(255, 218, 113, 1);
+    --light-yellow: rgb(255, 239, 194);
+    --hover-opacity: 0.9;
+    font-size: 12px;
+
+    --oxygen: "Oxygen", "Numans", sans-serif;
+    --numans: "Numans", sans-serif;
+    --ptsans: "PT Sans", sans-serif;
+}
