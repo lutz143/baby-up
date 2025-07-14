@@ -1,24 +1,71 @@
 import React, { useState, useEffect } from "react";
 import allNames from "../data/all_names.json";
 import { Container, Row, Col, Button } from "react-bootstrap";
-
-import classes from "../css/App.module.css"
+import classes from "../css/App.module.css";
 
 export default function App() {
-    const [namePool, setNamePool] = useState([]);
+    const [namePool, setNamePool] = useState(null); // null = not loaded yet
     const [currentName, setCurrentName] = useState(null);
-    const [votes, setVotes] = useState({});
     const [showResults, setShowResults] = useState(false);
+    const [votes, setVotes] = useState(false);
 
+    // ✅ Load saved votes, namePool, and currentName when app starts
     useEffect(() => {
-        setNamePool(allNames);
+        const savedVotes = localStorage.getItem("votes");
+        const savedPool = localStorage.getItem("namePool");
+        const savedCurrent = localStorage.getItem("currentName");
+
+        if (savedVotes) {
+            setVotes(JSON.parse(savedVotes));
+        }
+
+        if (savedPool) {
+            const parsedPool = JSON.parse(savedPool);
+            if (parsedPool.length > 0) {
+                setNamePool(parsedPool);
+            } else {
+                setNamePool(allNames);
+            }
+        } else {
+            setNamePool(allNames);
+        }
+
+        if (savedCurrent) {
+            setCurrentName(JSON.parse(savedCurrent));
+        }
     }, []);
 
+    // ✅ If namePool is ready and no currentName loaded, pick one
     useEffect(() => {
-        if (namePool.length > 0 && !currentName) {
+        if (namePool && namePool.length > 0 && !currentName) {
             pickRandomName();
         }
     }, [namePool]);
+
+    // ✅ Save votes to localStorage when they change
+    useEffect(() => {
+        if (votes) {
+            localStorage.setItem("votes", JSON.stringify(votes));
+        } else {
+            localStorage.removeItem("votes");
+        }
+    }, [votes]);
+
+    // ✅ Save namePool to localStorage when it changes
+    useEffect(() => {
+        if (namePool) {
+            localStorage.setItem("namePool", JSON.stringify(namePool));
+        }
+    }, [namePool]);
+
+    // ✅ Save currentName to localStorage when it changes
+    useEffect(() => {
+        if (currentName) {
+            localStorage.setItem("currentName", JSON.stringify(currentName));
+        } else {
+            localStorage.removeItem("currentName");
+        }
+    }, [currentName]);
 
     const pickRandomName = () => {
         const randomIndex = Math.floor(Math.random() * namePool.length);
@@ -47,12 +94,22 @@ export default function App() {
     const likedNames = Object.values(votes).filter((v) => v.vote === "up");
     const dislikedNames = Object.values(votes).filter((v) => v.vote === "down");
 
-    // Determine background color class
     const getBackgroundColor = () => {
         if (!currentName) return "";
-        return currentName.gender === "Girl" ? classes.girlBackground : classes.boyBackground;
+        return currentName.gender === "Girl"
+            ? classes.girlBackground
+            : classes.boyBackground;
     };
 
+    const handleClearVotes = () => {
+        localStorage.removeItem("votes");
+        localStorage.removeItem("namePool");
+        localStorage.removeItem("currentName");
+        setVotes({});
+        setNamePool(allNames);
+        setShowResults(false);
+        setCurrentName(null);
+    };
 
     return (
         <div>
@@ -74,11 +131,6 @@ export default function App() {
                                                 {currentName.gender}, {currentName.year}
                                             </div>
                                         </Col>
-                                        {/* <Col>
-                                    <div className={classes.flexContainer}>
-                                        {currentName.year}
-                                    </div>
-                                </Col> */}
                                     </Row>
                                     <Row className={classes.rowColContainer}>
                                         <Col className={classes.appButton}>
@@ -103,14 +155,12 @@ export default function App() {
                                     <Row className={classes.rowContainer}>
                                         <p className="mt-4 text-gray-600">
                                             Remaining names: {namePool.length}
-
                                         </p>
                                     </Row>
                                 </div>
                             ) : (
                                 <p className="text-lg">No more names to vote on! 🎉</p>
                             )}
-
                         </div>
                         <Row className={classes.rowColContainer}>
                             <Col className={classes.appButton}>
@@ -125,9 +175,11 @@ export default function App() {
                     </>
                 ) : (
                     <>
-                        <h2>Voting Results</h2>
+                        <div className={classes.flexContainer}>
+                            <h2 style={{ marginBottom: "34px" }}>Voting Results</h2>
+                        </div>
                         <Row>
-                            <Col>
+                            <Col className={classes.resultsCol}>
                                 <h4>👍 Liked</h4>
                                 <ul>
                                     {likedNames.map((item) => (
@@ -137,7 +189,7 @@ export default function App() {
                                     ))}
                                 </ul>
                             </Col>
-                            <Col>
+                            <Col className={classes.resultsCol}>
                                 <h4>👎 Disliked</h4>
                                 <ul>
                                     {dislikedNames.map((item) => (
@@ -148,17 +200,29 @@ export default function App() {
                                 </ul>
                             </Col>
                         </Row>
-                        <Button
-                            variant="secondary"
-                            className="mt-4"
-                            onClick={() => setShowResults(false)}
-                        >
-                            Back to Voting
-                        </Button>
+                        <Row className={classes.resultsButton}>
+                            <Col className={classes.resultsCol}>
+                                <Button
+                                    variant="secondary"
+                                    className="mt-4"
+                                    onClick={() => setShowResults(false)}
+                                >
+                                    Back to Voting
+                                </Button>
+                            </Col>
+                            <Col className={classes.resultsCol}>
+                                <Button
+                                    variant="danger"
+                                    className="mt-4 ms-2"
+                                    onClick={handleClearVotes}
+                                >
+                                    Reset & Start Over
+                                </Button>
+                            </Col>
+                        </Row>
                     </>
                 )}
             </Container>
         </div>
-
     );
 }
