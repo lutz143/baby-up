@@ -111,10 +111,43 @@ export default function App() {
         setCurrentName(null);
     };
 
+    const downloadCSV = () => {
+        const liked = likedNames.map(n => `"${n.name}","${n.gender}","${n.year}","Liked"`).join("\n");
+        const disliked = dislikedNames.map(n => `"${n.name}","${n.gender}","${n.year}","Disliked"`).join("\n");
+
+        const csvHeader = "Name,Gender,Year,Vote\n";
+        const csvContent = csvHeader + liked + "\n" + disliked;
+
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "baby_name_votes.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const mailResults = () => {
+        const liked = likedNames.map(n => `${n.name} (${n.gender}, ${n.year})`).join(", ");
+        const disliked = dislikedNames.map(n => `${n.name} (${n.gender}, ${n.year})`).join(", ");
+
+        const subject = encodeURIComponent("My Baby Name Votes");
+        const body = encodeURIComponent(`👍 Liked:\n${liked}\n\n👎 Disliked:\n${disliked}`);
+
+        window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    };
+
+
     return (
         <div>
             <div className={classes.header}>
                 <h1 className="text-2xl font-bold mb-4">Baby Names</h1>
+                <div className={classes.exportContainer}>
+                    <Button variant="success" onClick={downloadCSV} style={{ marginRight: "12px" }}>CSV</Button>
+                    <Button variant="info" onClick={mailResults}>Email</Button>
+                </div>
             </div>
             <Container>
                 {!showResults ? (
@@ -175,29 +208,39 @@ export default function App() {
                     </>
                 ) : (
                     <>
-                        <div className={classes.flexContainer}>
-                            <h2 style={{ marginBottom: "34px" }}>Voting Results</h2>
+                        <div className={classes.resultsHeaderContainer}>
+                            <h2 className={classes.resultsHeader}>Voting Results</h2>
                         </div>
+
                         <Row>
                             <Col className={classes.resultsCol}>
-                                <h4>👍 Liked</h4>
-                                <ul>
-                                    {likedNames.map((item) => (
-                                        <li key={`${item.year}-${item.gender}-${item.name}`}>
-                                            {item.name} ({item.gender}, {item.year})
-                                        </li>
-                                    ))}
-                                </ul>
+                                <Row>
+                                    <h4>👍 Liked</h4>
+                                </Row>
+                                <Row>
+                                    <ul>
+                                        {likedNames.map((item) => (
+                                            <li key={`${item.year}-${item.gender}-${item.name}`}>
+                                                {item.name} ({item.gender}, {item.year})
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </Row>
                             </Col>
                             <Col className={classes.resultsCol}>
-                                <h4>👎 Disliked</h4>
-                                <ul>
-                                    {dislikedNames.map((item) => (
-                                        <li key={`${item.year}-${item.gender}-${item.name}`}>
-                                            {item.name} ({item.gender}, {item.year})
-                                        </li>
-                                    ))}
-                                </ul>
+                                <Row>
+                                    <h4>👎 Disliked</h4>
+                                </Row>
+                                <Row>
+
+                                    <ul>
+                                        {dislikedNames.map((item) => (
+                                            <li key={`${item.year}-${item.gender}-${item.name}`}>
+                                                {item.name} ({item.gender}, {item.year})
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </Row>
                             </Col>
                         </Row>
                         <Row className={classes.resultsButton}>
