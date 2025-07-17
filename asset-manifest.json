@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/baby-up/static/css/main.9deec894.css",
-    "main.js": "/baby-up/static/js/main.096e8a2a.js",
+    "main.js": "/baby-up/static/js/main.cdf84a4b.js",
     "static/js/453.fe4c74cc.chunk.js": "/baby-up/static/js/453.fe4c74cc.chunk.js",
     "index.html": "/baby-up/index.html",
     "main.9deec894.css.map": "/baby-up/static/css/main.9deec894.css.map",
-    "main.096e8a2a.js.map": "/baby-up/static/js/main.096e8a2a.js.map",
+    "main.cdf84a4b.js.map": "/baby-up/static/js/main.cdf84a4b.js.map",
     "453.fe4c74cc.chunk.js.map": "/baby-up/static/js/453.fe4c74cc.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9deec894.css",
-    "static/js/main.096e8a2a.js"
+    "static/js/main.cdf84a4b.js"
   ]
 }
