@@ -144,10 +144,6 @@ export default function App() {
         <div>
             <div className={classes.header}>
                 <h1 className="text-2xl font-bold mb-4">Baby Names</h1>
-                <div className={classes.exportContainer}>
-                    <Button variant="success" onClick={downloadCSV} style={{ marginRight: "12px" }}>CSV</Button>
-                    <Button variant="info" onClick={mailResults}>Email</Button>
-                </div>
             </div>
             <Container>
                 {!showResults ? (
@@ -211,7 +207,15 @@ export default function App() {
                         <div className={classes.resultsHeaderContainer}>
                             <h2 className={classes.resultsHeader}>Voting Results</h2>
                         </div>
+                        <Row>
+                            <Col className={classes.resultsCol} style={{ marginBottom: "32px" }}>
+                                <Button variant="success" onClick={downloadCSV} style={{ marginRight: "12px" }}>CSV</Button>
 
+                            </Col>
+                            <Col className={classes.resultsCol} style={{ marginBottom: "32px" }}>
+                                <Button variant="info" onClick={mailResults}>Email</Button>
+                            </Col>
+                        </Row>
                         <Row>
                             <Col className={classes.resultsCol}>
                                 <Row>
